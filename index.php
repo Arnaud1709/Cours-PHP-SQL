@@ -14,6 +14,7 @@
     <h1>
         Stagiaire
     </h1>
+    <p><a href="edit.php"> Ajouter </a></p>
     <table>
         <tr>
             <th>ID</th>
@@ -33,6 +34,9 @@
             //On récupère l'extraction
             $datas = $sth->fetchAll(PDO::FETCH_ASSOC);
 
+            //Gestion des formats desdate en français
+            $intlDateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::SHORT, IntlDateFormatter::NONE);
+
             //On parcours le resulat et imprime à l'écran les données
             //Pour parcourir toute les ligne son fait une boucle
             foreach( $datas as $data){
@@ -40,12 +44,19 @@
                     echo'<td>'.$data['id'].'</td>';
                     echo'<td>'.$data['nom'].' '.$data['prenom'].'</td>';
                     echo'<td>'.$data['cp'].' '.$data['ville'].'</td>';
-                    echo'<td>'.$data['date_entree'].'</td>';
+                    echo'<td>'.$intlDateFormatter->format(strtotime($data['date_entree'])).'</td>';
                     echo '<td><a href="edit.php?edit=1&id='.$data['id'].'">Modifier</a> <a href="delete.php?id='.$data['id'].'">Supprimer</a></td>';
                 echo '</tr>';
             }
+
         ?>
     </table>
-    
+    <?php
+    // Si le nombre d'éléménent dans le tableau est nul
+    // Alors tableau vide donc pas d'enregistrement
+        if(count($datas) === 0){
+            echo'<p> Ancun stagiaire </p>';
+        }
+    ?>
 </body>
 </html>
