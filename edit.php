@@ -2,16 +2,18 @@
     require_once('db.php');
 
     //On va vérifier si on reçoit le formulaire
+    $nom = '';
+    $prenom = '';
+    $adresse = '';
+    $complement = '';
+    $cp = '';
+    $ville = '';
+    $dateEntry = '';
+    $error = false;
+    
     if(count($_POST) > 0 ){
         
-        $nom = '';
-        $prenom = '';
-        $adresse = '';
-        $complement = '';
-        $cp = '';
-        $ville = '';
-        $dateEntry = '';
-        $error = false;
+       
 
         if(strlen(trim($_POST['nom'])) !== 0){
             $nom = trim($_POST['nom']);
@@ -82,23 +84,23 @@
     <div>
         <form action="" method="post">
             <div>
-                <input type="text" name="nom" id="nom" placeholder="Nom">
+                <input type="text" name="nom" id="nom" placeholder="Nom" value="<?=$nom; ?>">
             </div>
             <div>
-                <input type="text" name="prenom" id="prenom" placeholder="Prénom">
+                <input type="text" name="prenom" id="prenom" placeholder="Prénom" value="<?=$prenom; ?>">
             </div>
             <div>
-                <input type="text" name="adresse" id="adresse" placeholder="Adresse">
+                <input type="text" name="adresse" id="adresse" placeholder="Adresse" value="<?=$adresse; ?>">
             </div>
             <div>
-                <input type="text" name="complement" id="complement" placeholder="Complément Adresse">
+                <input type="text" name="complement" id="complement" placeholder="Complément Adresse" value="<?=$complement; ?>">
             </div>
             <div>
-                <input type="text" name="cp" id="cp" placeholder="Code Postal">
-                <input type="text" name="ville" id="ville" placeholder="Ville">
+                <input type="text" name="cp" id="cp" placeholder="Code Postal" value="<?=$cp; ?>">
+                <input type="text" name="ville" id="ville" placeholder="Ville" value="<?=$ville; ?>">
             </div>
             <div>
-                <input type="date" name="date" id="date" placeholder="Date d'entrée">
+                <input type="date" name="date" id="date" placeholder="Date d'entrée" value="<?=$dateEntry; ?>">
             </div>
             <div>
                 <button type="submit">Ajouter</button>
