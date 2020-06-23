@@ -26,7 +26,6 @@ Nous commençons par donner un nom au tableau, ici il sera écrit dans un ```<h1
 ```
 
 On créé en avance un lien ```Ajouter``` qui permettra d'isérer des valeurs dans le tableau grâce à un formulaire sur la page ```edit.php```
-
 Afin de remplir ce tableau via la base de données du serveur, il faut donner l'accès au tableau. Pour une question d'organisation, nous allons créer un autre fichier nommé ```db.php``` (db = data base) pour executer l'accès à la base de donnée
 
 ```
@@ -62,14 +61,14 @@ Pour que notre tableau puisse exploiter les données prélevées, nous devons li
     ?>
 ```
 
-Afin d'éviter des erreur ou des boucles, nous utilisions l'instruction ```require_once```. Tout d'abord ```require``` pour produire une erreur fatale en cas de problèmes (ce qui stoppera le script) et ```_once``` afin de vérifier si le fichier est déjà inclus et si c'est le cas, ne pas l'inclure une deuxième fois.
+Pour que les fichiers liés à ```db.php``` executent son contenu, nous utiliserons l'instruction ```require_once```. Cette instruction se compose de deux paramètres: ```require``` qui execute la connection, il produit une erreur fatale en cas de problèmes (ce qui stoppera le script) et ```_once``` qui vérifie si le fichier est déjà inclus et si c'est le cas, ne l'inclus pas une deuxième fois.
 
 La structure du tableau étant terminée, il ne reste qu'a aller chercher les informations qui nous intéressent.
 
 ### Extraction de données avec SQL
 
 Pour extraire des données de la ```database``` il faut préparer des ```requêtes sql```.
-Pour gagner en ergonomie, on intègre en avance une variable que l'on nomme $sql
+Pour gagner en ergonomie, on intègre en avance une variable que l'on nomme ```$sql```
 
 ```
     <?php
@@ -100,8 +99,7 @@ Avant d'afficher le tableau, il faut corriger l'affichage de la date qui apparai
 Pour modifier facilement le format de date, on utilise l'extension PHP ```intl``` (à installer sur Vagrant ou à cocher sur Wamp)
 Les trois premières valeur de ```IntlDateFormatter``` doivent être obligatoirement renseignées : ```('choisir la langue', 'indiquer l'affichage, ici SHORT affiche en dd/mm/yyyy', 'indiquer si on veut aussi afficher l'heure')```
 
-On parcours le resulat qu'on affiche à l'écran via ```echo```
-Pour parcourir toute les lignes on fait une boucle
+On parcours le resulat qu'on affiche à l'écran via ```echo``` pour parcourir toute les lignes on fait une boucle
 
 ```
     foreach( $datas as $data){
@@ -118,7 +116,7 @@ Pour parcourir toute les lignes on fait une boucle
 Ici on nomme les éléments du tableau ```$data``` car ils sont une partie de l'ensemble de données ```$datas```
 Il faut aussi que le tableau transforme la chaine de caractères de la colone ```date_entree``` en date, on demande alors  à ```$intlDateFormatter``` de donner le format de date français à ```$data['date_entree']``` qui lit la date en format US sur le serveur grace à ```strtotime```
 
-Pour modifier et supprimer les valeurs, on insère des liens hypertexte avec les balises html ```a```. Pour ce qui est de l'edition, comme la manipulation se fait sur un autre formulaire ```edit=1&id``` précise à l'url qu'il ne doit appliquer les modifications qu'à l'id ciblée.
+Pour modifier et supprimer les valeurs, on insère des liens hypertexte avec les balises html ```a```. Pour ce qui est de l'edition, ```edit=1&id``` précisera à l'```url``` les informations que réclamerons les conditions de la page ```edit.php```. Nous nous y attarderons plus bas.
 
 Afin d'éviter de laisser un tableau vide, on va créer une condition ou afficher une phrase pour indquer qu'il fonctionne bien mais n'a rien à afficher
 
@@ -128,9 +126,9 @@ Afin d'éviter de laisser un tableau vide, on va créer une condition ou affiche
             }
 ```
 
-Ici, on utilise ```if``` pour créer une condition, on lui demande alors de vérifier le tableau ```$datas``` via l'instruction ```count```. On vérifie si la réponse est nulle avec ```===``` qui doit correspondre en ```type``` et en ```valeur``` à ```0``` soit une valeur nulle et un type indentique (On met ```===``` afin de préciser la vérification, ```==``` ne cherche à correspondre qu'à la ```valeur```)
+Ici, on utilise ```if``` pour créer une condition, on lui demande alors de vérifier le tableau ```$datas``` via l'instruction ```count```. On vérifie si la réponse est nulle avec ```===``` qui doit correspondre en ```type``` et en ```valeur``` à ```0```, soit une valeur nulle et un type indentique (On met ```===``` afin de préciser la vérification, ```==``` ne cherche à correspondre qu'à la ```valeur```)
 
-Le tableau est maintenant prêt à afficher son contenu, il nous reste maintenant à insérer, modifier ou supprimer des lignes dans la base de données. Pour effectuer ces taches, on créé deux nouvelles pages: ```edit.php```, ```delete.php```.
+Le tableau est maintenant prêt à afficher son contenu, il nous reste maintenant à insérer, modifier ou supprimer des lignes dans la base de données. Pour effectuer ces tâches, on créé deux nouvelles pages: ```edit.php``` et ```delete.php```.
 
 ## Editer les valeurs dans le tableau
 
@@ -202,10 +200,10 @@ Ensuite, il faut créer l'espace de travail à partir d'une structure ```HTML```
     </div>
 ```
 
-On comence par différencier les affichages en fonction de la requête, on déclare donc une condition pour la requête ```Edition```. On utilise donc ```if``` pour imposer une condition, ici, on regarde dans l'url grace à l'instruction ```isset```, il va alors vérifier s'il peut prendre les valeurs de ```id``` et ```edit```. S'il peut récupérer ces valeurs, il affichera donc le résultat de la requête ```Edition```.
-Si ces conditions ne sont pas respectées, il affichera donc le resultat de la requête ```Création```.
+On commence par différencier les informations affichées, on déclare donc une condition pour la requête ```Edition```. On utilise donc ```if``` pour imposer une condition, ici, on regarde dans l'url grace à l'instruction ```isset```, il va alors vérifier s'il peut prendre les valeurs de ```id``` et ```edit```. S'il peut récupérer ces valeurs, il affichera donc le résultat de la requête ```Edition```.
+Si ces conditions ne sont pas respectées, il affichera donc le resultat de la requête ```Inserion```.
 
-Dans une ```div``` on créé un formulaire via les balises ```<form></form>``` a qui on ajoute la ```method="post"``` qui demandera de remplir les formulaires. On sépare ensuite les différentes zones d'```input``` par des div, on leur donne un ```type```, ```text``` pour que les formulaires soient des zones de texte à remplir, ```date``` pour avoir le format d'écriture souhaité ou sélectionner une date va un calendrier et ```hidden``` pour n'aparaitre que sous certaines conditions. On les identifie aussi via leur ```id```, on pré-remplie aussi la zone de texte grâce au ```placeholder``` pour indiquer l'information demandée et on fini par leur attribuer une valeur avec ```value```, ici il s'agit de variables PHP.
+Dans une ```div``` on créé un formulaire via les balises ```<form></form>``` a qui on ajoute la ```method="post"``` qui demandera de remplir les formulaires. On sépare ensuite les différentes zones d'```input``` par des div, on leur donne un ```type```: ```text``` pour que les formulaires soient des zones de texte à remplir, ```date``` pour avoir le format d'écriture souhaité ou sélectionner une date va un calendrier et ```hidden``` pour n'aparaitre que sous certaines conditions. On les identifie aussi via leur ```id```, on pré-remplie aussi la zone de texte grâce au ```placeholder``` pour indiquer l'information demandée et on fini par leur attribuer une valeur avec ```value```, ici il s'agit de variables PHP.
 
 ```
     $nom = '';
@@ -221,7 +219,7 @@ Dans une ```div``` on créé un formulaire via les balises ```<form></form>``` a
 
 On créé donc des variables vides, on pourra ainsi avoir un formulaire vide au chargement de la page, elles doivent être au dessus de toutes requêtes.
 Une variable ```$error``` est créée afin de pouvoir annuler des requêtes si certaines conditions ne sont pas correctement complétées.
-Une fois les variables créées, on va vérifier via l'```URL``` si on est en mode ```Ajout``` ou ```Edition```
+Une fois les variables créées, on va vérifier via l'```URL``` si on est en mode ```Insertion``` ou ```Edition```
 
 ```
     if(isset($_GET['id']) && isset($_GET['edit'])){
@@ -248,12 +246,12 @@ Une fois les variables créées, on va vérifier via l'```URL``` si on est en mo
 
 
 Afin de protéger l'id ciblée de toute ```insertion de code``` on utilise ```bindParam(':id', $_GET['id'], PDO::PARAM_INT)``` qui va lier la valeur de l'```id``` à sa variable, ainsi, même si quelqu'un tente de modifier cette valeur via l'url, la requête ne sera pas effectuée.
-Pour finir, on vérifie via ```gettype``` si la valeur du ```$data``` existe, si ce n'est pas le cas, en cas de ```var_dump``` ce n'est pas un ```array``` qui va apparaitre, mais un ```boolean```: c'est marqueur de vérité, ici il annocera un ```false``` qui indiquera que la valeur recherchée n'existe pas.
-Si c'est un ```boolean``` alors la page sera automatiquement redirigée vers ```index.php```, via la requête HTTP ```header```(envoie le lien dans la barre de navigation), avant de terminer le script grâce ```exit``` ou ```die``` pour eviter qu'il ne boucle dans l'index.
+Pour finir, on vérifie via ```gettype``` si la valeur du ```$data``` existe, si ce n'est pas le cas, en cas de ```var_dump``` ce n'est pas un ```array``` qui va apparaitre, mais un ```boolean```: c'est marqueur de vérité, ici il annocera toujours un ```false``` qui indiquera que la valeur recherchée n'existe pas.
+Si c'est un ```boolean``` alors la page sera automatiquement redirigée vers ```index.php```, via la requête ```header``` qui envoie le lien qui lui est attribué dans la barre de navigation. On termine ensuite le script grâce ```exit``` ou ```die``` pour eviter qu'il ne boucle dans l'index.
 
 Si les conditions son respectées, les zone d'```input``` afficheront les ```valeurs à éditer``` extraites de la base de données par la requête ```$sql```. Pour protéger ```$id```qui ne doit pas être modifié, nous rajoutons ```htmlentities``` pour eviter l'injection de HTML dans la base de données.
 
-Si ce n'est pas une ```Edition```, il s'agit donc automatiquement d'une ```Création```.
+Si ce n'est pas une ```Edition```, il s'agit donc automatiquement d'une ```Insertion```.
 Pour insérer des valeurs dans la ```DataBase``` en toute sécurité, on va y imposer des conditions
 
 ```
@@ -301,11 +299,11 @@ if(count($_POST) > 0 ){
         }
 
 ```
-On commence par imposer une condition ```if``` qui va vérifier via ```count``` si tout les champs sont remplis. Chaque champ va vérifier à son tour via une autre condition ```if``` quel message il doit envoyer à ```count```, ```strlen``` va vérifier que la nombre de caractères soit différent de zéro, ici représenté par ```!==0```, le ```!``` représentant la négation de ```==``` qui demande une égalité de valeur. Quand à ```trim``` il est là pour corriger les erreurs de frappe en supprimant les espaces avant et après chaque chaine de caractères, évitant ainsi des interférances dans la recherche des ces chaines de caractères dans la base de données. 
+On commence par imposer une condition ```if``` qui va vérifier via ```count``` si tout les champs sont remplis. Chaque champ va vérifier à son tour via une autre condition ```if``` quel message il doit envoyer à ```count```, ```strlen``` va vérifier que la nombre de caractères soit différent de zéro, ici représenté par ```!==0```, le ```!``` représentant la négation de ```==``` qui demande une égalité de valeur. Quand à ```trim``` il est là pour corriger les erreurs de frappe en supprimant les espaces avant et après chaque chaine de caractères, évitant ainsi des interférences dans la recherche des chaines de caractères dans la base de données. 
 
-Si ces conditions sont respectées, les valeurs seront intégrées dans la base de données, mais au moindre problème, la condition ```else``` va déclencher ```$error``` qui interrompera le formulaire. Seules exeptions ici, ```$complement``` qui peut rester vide puisqu'elle n'est pas obligatoire et ```$id``` qui ne peut être modifiée et est protégée par ```htmlentities```
+Si ces conditions sont respectées, les valeurs seront intégrées dans la base de données, mais au moindre problème, la condition ```else``` va déclencher ```$error``` qui interrompera le formulaire. Seules exeptions ici, ```$complement``` qui peut rester vide puisqu'elle n'est pas obligatoire et ```$id``` qui ne peut être modifiée et est protégée par ```htmlentities```.
 
-Il reste maintenant à préparer la requête pour insérer les valeurs dans la base de données
+Il reste maintenant à préparer la requête pour insérer les valeurs dans la base de données.
 
 ```
 if($error === false){
@@ -332,12 +330,12 @@ if($error === false){
             header('Location: index.php');
 ```
 
-Pour différencier l'```Edition``` de la ```Création```, on va créer une autre condition de vérification grâce à ```if``` et ```isset```, si les conditions sont respectées, la requête sql ```UPDATE``` mettra à jour les informations dans la base de données, sinon la requête ```INSERT``` les y intégrera.
+Pour différencier l'```Edition``` de l'```Insertion```, on va créer une autre condition de vérification grâce à ```if``` et ```isset```, si les conditions sont respectées, la requête sql ```UPDATE``` mettra à jour les informations dans la base de données, sinon la requête ```INSERT``` les y intégrera.
 
 Il reste à protéger les injections avec ```bindParam```. La valeur de ```date``` doit être protégée différemment: comme nous modifions son format avec ```strftime```, ```bindParam``` ne peut lier la variable qui est modifié lors de l'injection, nous lui demandrons donc de lier sa valeur via ```bindValue```. Quand à ```$id```, puisqu'il n'est pas injecté manuellement, il ne doit être protégé que lorsque les valeurs sont modifiés, sa sécurité n'est donc demandée qu'en cas d'```Edition```.
 
 Une fois les données protégées, on execute ```$sth``` qui les injecte dans le serveur. Une fois la requête terminée, ```header``` nour redirige vers la ```Location``` qui lui est alouée (Mettre le "L" en majuscule et un espace après les ":"), ici ```index.php```.
-L'```Editon```/```Création``` est donc terminée, il reste maintenant à intégrer la ```Supression```
+L'```Editon```/```Insertion``` est donc terminée, il reste maintenant à intégrer la ```Supression```
 
 # Supprimer une ligne du tableau
 
