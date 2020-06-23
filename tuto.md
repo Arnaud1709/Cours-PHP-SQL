@@ -50,7 +50,7 @@ Ici, nous utilisons des constantes ```define``` afin d'atribuer des valeurs fixe
     - ```USER``` et ```PWD``` contient les paramètres d'accès au serveur
     - ```HOST``` indique le chemin vers le serveur
 
-```$dbh``` devient donc la variable permettant la connexion au serveur.
+```$dbh``` (data base handle) devient donc la variable permettant la connexion au serveur.
 
 La fonction ```try``` est une fonction générique de connexion, cependant, nous rajoutons ```array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')``` à son contenu afin d'éviter les erreurs d'écriture et d'afficher les résultats en ```UTF-8```
 
@@ -66,7 +66,7 @@ Afin d'éviter des erreur ou des boucles, nous utilision l'instruction ```requir
 
 La structure du tableau étant terminée, il ne reste qu'a aller chercher les informations qui nous intéressent.
 
-## Extraction de données avec SQL
+### Extraction de données avec SQL
 
 Pour extraire des données de la ```database``` il faut préparer des ```requêtes sql```.
 Pour gagner en ergonomie, on intègre en avance une variable que l'on nomme $sql
@@ -80,7 +80,7 @@ Pour gagner en ergonomie, on intègre en avance une variable que l'on nomme $sql
 ```
 
 Dans ```$sql``` on écrit la requête sql comme elle aurait été écrite sur ```phpMyAdmin```
-La flèche ```->``` permet de réaliser une méthode, ici avec l'instruction ```prepare``` on demande à ```$sth``` de stocker temporairement la requête ```$dbh``` à qui on a affecté la variable ```$sql```
+La flèche ```->``` permet de réaliser une méthode, ici avec l'instruction ```prepare``` on demande à ```$sth``` (statement handle) de stocker temporairement la requête ```$dbh``` à qui on a affecté la variable ```$sql```
 On l'execute ensuite avec la commande execute
 
 On récupère ensuite l'extraction avec ```fetchALL6```
