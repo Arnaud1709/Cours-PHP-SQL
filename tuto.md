@@ -46,7 +46,7 @@ Afin de remplir ce tableau via la base de données du serveur, il faut donner l'
 ```
 
 Ici, nous utilisons des constantes ```define``` afin d'atribuer des valeurs fixe aux paramètres de conexion:
-    - ```'''DATABASE``` demande le chemin de la base de donnée
+    - ```DATABASE``` demande le chemin de la base de donnée
     - ```USER``` et ```PWD``` contient les paramètres d'accès au serveur
     - ```HOST``` indique le chemin vers le serveur
 
