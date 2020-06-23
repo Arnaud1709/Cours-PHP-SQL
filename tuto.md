@@ -132,7 +132,7 @@ Le tableau est maintenant prêt à afficher son contenu, il nous reste maintenan
 
 ## Editer les valeurs dans le tableau
 
-# Ajouter/Editer des valeurs
+### Ajouter/Editer des valeurs
 
 A l'aide de ```php``` et de ```sql``` nous allons interragir directement avec la base de donnée depuis le navigateur. Pour commencer nous allons créer un fichier ```edit.php``` qui contiendra les requêtes d'insertion et d'editions. Les deux ayant besoin de formulaires similaires et touchant aux mêmes données, il suffira d'ajouter des conditions afin de ne pas rajouter de code superflux.
 
@@ -337,7 +337,7 @@ Il reste à protéger les injections avec ```bindParam```. La valeur de ```date`
 Une fois les données protégées, on execute ```$sth``` qui les injecte dans le serveur. Une fois la requête terminée, ```header``` nour redirige vers la ```Location``` qui lui est alouée (Mettre le "L" en majuscule et un espace après les ":"), ici ```index.php```.
 L'```Editon```/```Insertion``` est donc terminée, il reste maintenant à intégrer la ```Supression```
 
-# Supprimer une ligne du tableau
+### Supprimer une ligne du tableau
 
 Pour créer une ```requête de supression```, on commence d'abord par l'isoler sur un fichier que l'on nommera ```delete.php```
 
