@@ -114,7 +114,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un(e) stagiaire</title>
+    <?php
+        if( isset($_GET['id']) && isset($_GET['edit'])){
+            echo'<title>Modifier des informations</title>';
+        }else{
+            echo'<title>Ajouter un(e) stagiaire</title>';
+        }
+    ?>
 </head>
 <body>
     <?php
