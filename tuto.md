@@ -97,7 +97,7 @@ Avant d'afficher le tableau, il faut corriger l'affichage de la date qui apparai
 ```
 
 Pour modifier facilement le format de date, on utilise l'extension PHP ```intl``` (à installer sur Vagrant ou à cocher sur Wamp)
-Les trois premières valeur de ```IntlDateFormatter``` doivent être obligatoirement renseignées : ```('choisir la langue', 'indiquer l'affichage, ici SHORT affiche en dd/mm/yyyy', 'indiquer si on veut aussi afficher l'heure')```
+Les trois premières valeur de ```IntlDateFormatter``` doivent être obligatoirement renseignées : ```('choisir la langue avec le format suivant: xx_XX', 'indiquer l'affichage, ici SHORT affiche en dd/mm/yyyy', 'indiquer si on veut aussi afficher l'heure')```
 
 On parcours le resulat qu'on affiche à l'écran via ```echo``` pour parcourir toute les lignes on fait une boucle
 
@@ -136,7 +136,7 @@ Le tableau est maintenant prêt à afficher son contenu, il nous reste maintenan
 
 A l'aide de ```php``` et de ```sql``` nous allons interragir directement avec la base de donnée depuis le navigateur. Pour commencer nous allons créer un fichier ```edit.php``` qui contiendra les requêtes d'insertion et d'editions. Les deux ayant besoin de formulaires similaires et touchant aux mêmes données, il suffira d'ajouter des conditions afin de ne pas rajouter de code superflux.
 
-Pour obtenir les autorisations vis à vis de la ```DataBase```, on commence par lier ```delete.php``` à ```db.php```
+Pour obtenir les autorisations vis à vis de la ```DataBase```, on commence par lier ```edit.php``` à ```db.php```
 
 ```
     <?php
